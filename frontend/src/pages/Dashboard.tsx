@@ -1,135 +1,127 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { getUserProfile, updateUserProgress, getClanMembers, UserProfile, UserProgress } from '../services/firebaseService';
+
+interface ClanMember extends UserProfile {
+  overallProgress: number;
+}
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [user] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    clan: 'Tech Warriors',
-    level: 'Intermediate'
-  });
+  const { currentUser, logout } = useAuth();
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [clanMembers, setClanMembers] = useState<ClanMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('');
 
-  const handleSignOut = () => {
-    // Simulate sign out
-    alert('Signed out successfully!');
-    navigate('/');
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/signin');
+      return;
+    }
+    loadUserData();
+  }, [currentUser, navigate]);
+
+  const loadUserData = async () => {
+    if (!currentUser) return;
+
+    try {
+      setLoading(true);
+      
+      // Load user profile
+      const profile = await getUserProfile(currentUser.uid);
+      setUserProfile(profile);
+
+      // Load clan members if user is in a clan
+      if (profile?.clanId) {
+        const members = await getClanMembers(profile.clanId);
+        const membersWithProgress = members.map(member => {
+          const progressEntries = Object.entries(member.progress || {});
+          const totalProgress = progressEntries.length > 0 
+            ? progressEntries.reduce((acc, [, prog]) => acc + prog.percentage, 0) / progressEntries.length
+            : 0;
+          return {
+            ...member,
+            overallProgress: Math.round(totalProgress)
+          };
+        });
+        setClanMembers(membersWithProgress);
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Helper function to calculate overall progress
-  const calculateOverallProgress = (topics: any[]) => {
-    let totalProgress = 0;
-    for (let i = 0; i < topics.length; i++) {
-      totalProgress += (topics[i].completed / topics[i].total);
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Sign out error:', error);
     }
-    return Math.round((totalProgress / topics.length) * 100);
   };
 
-  // Mock data for progress
-  const personalProgress = [
-    { topic: 'JavaScript Fundamentals', completed: 85, total: 100, color: 'bg-blue-500' },
-    { topic: 'React Development', completed: 60, total: 80, color: 'bg-green-500' },
-    { topic: 'Node.js Backend', completed: 45, total: 75, color: 'bg-purple-500' },
-    { topic: 'Database Design', completed: 30, total: 60, color: 'bg-yellow-500' },
-    { topic: 'API Development', completed: 25, total: 50, color: 'bg-red-500' }
+  const updateTopicProgress = async (topic: string, completed: number, total: number) => {
+    if (!currentUser || !userProfile) return;
+
+    try {
+      await updateUserProgress(currentUser.uid, topic, completed, total);
+      // Reload user data to reflect changes
+      await loadUserData();
+    } catch (error) {
+      console.error('Error updating progress:', error);
+    }
+  };
+
+  const addNewTopic = async () => {
+    if (!selectedTopic || !currentUser) return;
+
+    try {
+      await updateUserProgress(currentUser.uid, selectedTopic, 0, 100);
+      setSelectedTopic('');
+      await loadUserData();
+    } catch (error) {
+      console.error('Error adding topic:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 flex items-center justify-center">
+        <div className="glass-morphism rounded-2xl p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-white text-lg">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  };
+
+  if (!currentUser || !userProfile) {
+    return null;
+  }
+
+  const availableTopics = [
+    'JavaScript Fundamentals',
+    'React Development',
+    'Node.js Backend',
+    'Python Programming',
+    'Data Structures',
+    'Algorithms',
+    'Web Security',
+    'Database Design',
+    'Cloud Computing',
+    'Machine Learning'
   ];
 
-  // Clan progress for the same topics as personal progress
-  const clanTopicProgress = [
-    {
-      name: 'Alex Chen',
-      avatar: '👨‍💻',
-      clan: 'Tech Warriors',
-      rank: 1,
-      topics: [
-        { topic: 'JavaScript Fundamentals', completed: 95, total: 100 },
-        { topic: 'React Development', completed: 75, total: 80 },
-        { topic: 'Node.js Backend', completed: 65, total: 75 },
-        { topic: 'Database Design', completed: 50, total: 60 },
-        { topic: 'API Development', completed: 40, total: 50 }
-      ]
-    },
-    {
-      name: 'Sarah Kim',
-      avatar: '👩‍💻',
-      clan: 'Tech Warriors',
-      rank: 2,
-      topics: [
-        { topic: 'JavaScript Fundamentals', completed: 90, total: 100 },
-        { topic: 'React Development', completed: 70, total: 80 },
-        { topic: 'Node.js Backend', completed: 60, total: 75 },
-        { topic: 'Database Design', completed: 45, total: 60 },
-        { topic: 'API Development', completed: 35, total: 50 }
-      ]
-    },
-    {
-      name: 'You',
-      avatar: '🧑‍💻',
-      clan: 'Tech Warriors',
-      rank: 3,
-      topics: personalProgress // Use the same data as personal progress
-    },
-    {
-      name: 'Mike Johnson',
-      avatar: '👨‍🎓',
-      clan: 'Tech Warriors',
-      rank: 4,
-      topics: [
-        { topic: 'JavaScript Fundamentals', completed: 80, total: 100 },
-        { topic: 'React Development', completed: 55, total: 80 },
-        { topic: 'Node.js Backend', completed: 40, total: 75 },
-        { topic: 'Database Design', completed: 25, total: 60 },
-        { topic: 'API Development', completed: 20, total: 50 }
-      ]
-    },
-    {
-      name: 'Emily Davis',
-      avatar: '👩‍🎓',
-      clan: 'Tech Warriors',
-      rank: 5,
-      topics: [
-        { topic: 'JavaScript Fundamentals', completed: 75, total: 100 },
-        { topic: 'React Development', completed: 50, total: 80 },
-        { topic: 'Node.js Backend', completed: 35, total: 75 },
-        { topic: 'Database Design', completed: 20, total: 60 },
-        { topic: 'API Development', completed: 15, total: 50 }
-      ]
-    }
-  ];
-
-  const recommendedCourses = [
-    {
-      title: 'Advanced React Patterns',
-      description: 'Master advanced React concepts including hooks, context, and performance optimization',
-      difficulty: 'Advanced',
-      duration: '8 hours',
-      rating: 4.8,
-      students: 2340,
-      image: '⚛️'
-    },
-    {
-      title: 'TypeScript for Professionals',
-      description: 'Learn TypeScript to write more robust and maintainable JavaScript applications',
-      difficulty: 'Intermediate',
-      duration: '6 hours',
-      rating: 4.7,
-      students: 1890,
-      image: '📘'
-    },
-    {
-      title: 'GraphQL API Design',
-      description: 'Build efficient APIs with GraphQL and learn modern data fetching patterns',
-      difficulty: 'Intermediate',
-      duration: '5 hours',
-      rating: 4.9,
-      students: 1560,
-      image: '🔗'
-    }
-  ];
+  const progressEntries = Object.entries(userProfile.progress || {});
 
   return (
     <div className="font-sans bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 min-h-screen text-white">
-      {/* Enhanced header with navigation and search */}
+      {/* Header */}
       <header className="fixed w-full top-0 z-50 bg-dark-800/80 backdrop-blur-md border-b border-dark-600">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -139,259 +131,254 @@ const Dashboard: React.FC = () => {
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
-                LearnMate
-              </span>
+              <h1 className="text-2xl font-bold gradient-text">LearnMate</h1>
+            </div>
+
+            {/* Search Bar */}
+            <div className="flex-1 max-w-md mx-8">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search courses..."
+                  className="w-full px-4 py-2 bg-dark-700/50 border border-dark-600 rounded-xl text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+                <svg className="absolute right-3 top-2.5 w-5 h-5 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
             </div>
 
             {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Home</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Courses</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">About</a>
-              <span className="text-primary-400 font-medium">Dashboard</span>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={handleSignOut}
-                className="text-gray-300 hover:text-white transition-all duration-300 font-medium"
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Search Bar */}
-        <div className="border-t border-dark-600 bg-dark-800/50">
-          <div className="container mx-auto px-6 py-3">
-            <div className="relative max-w-md mx-auto">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
+            <div className="flex items-center space-x-6">
+              <a href="#" className="text-dark-300 hover:text-white transition-colors">Home</a>
+              <a href="#" className="text-dark-300 hover:text-white transition-colors">Courses</a>
+              <a href="#" className="text-dark-300 hover:text-white transition-colors">About</a>
+              
+              {/* User Menu */}
+              <div className="relative">
+                <button 
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-3 bg-dark-700/50 hover:bg-dark-600/50 px-4 py-2 rounded-xl transition-all duration-300"
+                >
+                  <img 
+                    src={userProfile.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userProfile.name)}&background=6366f1&color=ffffff`}
+                    alt="Profile" 
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-white font-medium">{userProfile.name}</span>
+                  <svg className="w-4 h-4 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
               </div>
-              <input
-                type="text"
-                className="block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-xl bg-dark-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Search courses, topics, or resources..."
-              />
             </div>
           </div>
         </div>
       </header>
-      
-      {/* Dashboard Content */}
-      <main className="pt-32 pb-12">
+
+      {/* Main Content */}
+      <main className="pt-24 pb-12">
         <div className="container mx-auto px-6">
           {/* Welcome Section */}
-          <div className="mb-12">
-            <div className="glass-morphism rounded-2xl p-8">
+          <div className="mb-8">
+            <div className="glass-morphism rounded-2xl p-8 hover-lift">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-4xl font-bold text-white mb-2">
-                    Welcome back, <span className="gradient-text">{user.name}</span>!
-                  </h1>
+                  <h2 className="text-3xl font-bold mb-2">
+                    Welcome back, <span className="gradient-text">{userProfile.name}</span>!
+                  </h2>
                   <p className="text-dark-300 text-lg">
-                    Ready to continue your learning journey with {user.clan}?
+                    Ready to continue your learning journey?
                   </p>
                 </div>
-                <div className="hidden md:block">
-                  <div className="glass-morphism rounded-2xl p-6 text-center">
-                    <div className="text-3xl mb-2">🎯</div>
-                    <div className="text-2xl font-bold text-primary-400">75%</div>
-                    <div className="text-dark-300 text-sm">Overall Progress</div>
-                  </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold gradient-text">Level {userProfile.profile?.level || 1}</div>
+                  <div className="text-dark-300">{userProfile.profile?.points || 0} points</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Personal Progress Section */}
-          <div className="mb-12">
-            <div className="glass-morphism rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold text-white flex items-center">
-                  <svg className="w-8 h-8 mr-3 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"/>
-                  </svg>
-                  Your Progress
-                </h2>
-                <div className="text-primary-400 font-medium">
-                  {personalProgress.length} Active Topics
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                {personalProgress.map((item, index) => (
-                  <div key={index} className="glass-morphism rounded-xl p-6 hover-lift">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-semibold text-white">{item.topic}</h3>
-                      <span className="text-primary-400 font-medium">
-                        {item.completed}/{item.total} lessons
-                      </span>
-                    </div>
-                    <div className="w-full bg-dark-700 rounded-full h-3 mb-2">
-                      <div 
-                        className={`h-3 rounded-full ${item.color} transition-all duration-300`}
-                        style={{ width: `${(item.completed / item.total) * 100}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-sm text-dark-300">
-                      <span>{Math.round((item.completed / item.total) * 100)}% complete</span>
-                      <span>{item.total - item.completed} lessons remaining</span>
-                    </div>
-                  </div>
-                ))}
+          {/* Add New Topic Section */}
+          <div className="mb-8">
+            <div className="glass-morphism rounded-2xl p-6">
+              <h3 className="text-xl font-bold mb-4 gradient-text">Add New Learning Topic</h3>
+              <div className="flex space-x-4">
+                <select
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  className="flex-1 px-4 py-2 bg-dark-700/50 border border-dark-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                >
+                  <option value="">Select a topic...</option>
+                  {availableTopics
+                    .filter(topic => !userProfile.progress || !userProfile.progress[topic])
+                    .map(topic => (
+                      <option key={topic} value={topic}>{topic}</option>
+                    ))
+                  }
+                </select>
+                <button
+                  onClick={addNewTopic}
+                  disabled={!selectedTopic}
+                  className="px-6 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-semibold transition-all duration-300"
+                >
+                  Add Topic
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Clan Progress Section */}
-          <div className="mb-12">
-            <div className="glass-morphism rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold text-white flex items-center">
-                  <svg className="w-8 h-8 mr-3 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                  </svg>
-                  Clan Leaderboard - Same Topics
-                </h2>
-                <div className="text-primary-400 font-medium">
-                  {user.clan}
-                </div>
-              </div>
+          {/* Progress Section */}
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+            {/* Personal Progress */}
+            <div className="glass-morphism rounded-2xl p-6 hover-lift">
+              <h3 className="text-xl font-bold mb-6 gradient-text">Your Progress</h3>
               
-              <div className="space-y-6">
-                {clanTopicProgress.map((member, index) => (
-                  <div key={index} className={`glass-morphism rounded-xl p-6 hover-lift ${member.name === 'You' ? 'ring-2 ring-primary-500' : ''}`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-4">
-                        <span className="text-2xl font-bold text-primary-400 w-8">#{member.rank}</span>
-                        <span className="text-2xl">{member.avatar}</span>
-                        <div>
-                          <div className="text-lg font-semibold text-white">{member.name}</div>
-                          <div className="text-sm text-dark-300">{member.clan}</div>
-                        </div>
+              {progressEntries.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-dark-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <p className="text-dark-300">No learning topics yet. Add your first topic above!</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {progressEntries.map(([topic, progress], index) => (
+                    <div key={index} className="bg-dark-700/30 rounded-xl p-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-semibold text-white">{topic}</h4>
+                        <span className="text-primary-400 font-bold">{progress.percentage}%</span>
                       </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-primary-400">
-                          {calculateOverallProgress(member.topics)}%
+                      <div className="w-full bg-dark-600 rounded-full h-2 mb-3">
+                        <div 
+                          className="bg-gradient-to-r from-primary-500 to-primary-400 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${progress.percentage}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-dark-300 text-sm">{progress.completed} / {progress.total} completed</span>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => updateTopicProgress(topic, Math.max(0, progress.completed - 1), progress.total)}
+                            className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg text-sm"
+                          >
+                            -1
+                          </button>
+                          <button
+                            onClick={() => updateTopicProgress(topic, Math.min(progress.total, progress.completed + 1), progress.total)}
+                            className="px-3 py-1 bg-green-500/20 hover:bg-green-500/30 text-green-300 rounded-lg text-sm"
+                          >
+                            +1
+                          </button>
                         </div>
-                        <div className="text-sm text-dark-300">Overall Progress</div>
                       </div>
                     </div>
-                    
-                    {/* Topic-specific progress bars */}
-                    <div className="space-y-3">
-                      {member.topics.map((topicData, topicIndex) => {
-                        const progressPercent = Math.round((topicData.completed / topicData.total) * 100);
-                        const personalTopic = personalProgress[topicIndex];
-                        
-                        return (
-                          <div key={topicIndex} className="bg-dark-800/50 rounded-lg p-3">
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-white">{topicData.topic}</span>
-                              <span className="text-xs text-dark-300">
-                                {topicData.completed}/{topicData.total}
-                              </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Clan Progress */}
+            <div className="glass-morphism rounded-2xl p-6 hover-lift">
+              <h3 className="text-xl font-bold mb-6 gradient-text">
+                {userProfile.clanId ? 'Clan Leaderboard' : 'Join a Clan (Optional)'}
+              </h3>
+              
+              {!userProfile.clanId ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-dark-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-dark-300 mb-4">You're not in a clan yet. Join one to compete with others!</p>
+                  <button className="px-6 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white rounded-xl font-semibold transition-all duration-300">
+                    Browse Clans
+                  </button>
+                </div>
+              ) : clanMembers.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mx-auto mb-4"></div>
+                  <p className="text-dark-300">Loading clan members...</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {clanMembers
+                    .sort((a, b) => b.overallProgress - a.overallProgress)
+                    .map((member, index) => (
+                      <div key={member.uid} className="bg-dark-700/30 rounded-xl p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="flex-shrink-0">
+                              <span className="text-primary-400 font-bold text-lg">#{index + 1}</span>
                             </div>
-                            <div className="w-full bg-dark-700 rounded-full h-2">
-                              <div 
-                                className={`h-2 rounded-full transition-all duration-300 ${personalTopic?.color || 'bg-primary-500'}`}
-                                style={{ width: `${progressPercent}%` }}
-                              ></div>
+                            <img 
+                              src={member.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=6366f1&color=ffffff`}
+                              alt={member.name}
+                              className="w-10 h-10 rounded-full"
+                            />
+                            <div>
+                              <h4 className="font-semibold text-white">{member.name}</h4>
+                              <p className="text-dark-400 text-sm">{member.profile?.points || 0} points</p>
                             </div>
-                            <div className="text-xs text-dark-400 mt-1">{progressPercent}% complete</div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                          <div className="text-right">
+                            <div className="text-lg font-bold text-primary-400">
+                              {member.overallProgress}%
+                            </div>
+                            <div className="text-dark-400 text-sm">
+                              {Object.keys(member.progress || {}).length} topics
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Recommended Courses Section */}
-          <div className="mb-12">
-            <div className="glass-morphism rounded-2xl p-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold text-white flex items-center">
-                  <svg className="w-8 h-8 mr-3 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  Recommended for You
-                </h2>
-                <div className="text-primary-400 font-medium">
-                  Based on your interests
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {recommendedCourses.map((course, index) => (
-                  <div key={index} className="glass-morphism rounded-xl p-6 hover-lift">
-                    <div className="text-4xl mb-4 text-center">{course.image}</div>
-                    <h3 className="text-xl font-semibold text-white mb-3">{course.title}</h3>
-                    <p className="text-dark-300 text-sm mb-4 line-clamp-3">{course.description}</p>
-                    
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-dark-400">Difficulty:</span>
-                        <span className={`text-sm font-medium px-2 py-1 rounded-full ${
-                          course.difficulty === 'Advanced' ? 'bg-red-500/20 text-red-400' :
-                          course.difficulty === 'Intermediate' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-green-500/20 text-green-400'
-                        }`}>
-                          {course.difficulty}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-dark-400">Duration:</span>
-                        <span className="text-sm text-white">{course.duration}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-dark-400">Rating:</span>
-                        <div className="flex items-center space-x-1">
-                          <span className="text-yellow-400">⭐</span>
-                          <span className="text-sm text-white">{course.rating}</span>
-                          <span className="text-sm text-dark-400">({course.students})</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <button className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg">
+          {/* Recommended Courses */}
+          <div className="glass-morphism rounded-2xl p-6">
+            <h3 className="text-xl font-bold mb-6 gradient-text">Recommended Courses</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {availableTopics
+                .filter(topic => 
+                  (!userProfile.progress || !userProfile.progress[topic]) &&
+                  topic.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .slice(0, 6)
+                .map((topic, index) => (
+                  <div key={index} className="bg-dark-700/30 rounded-xl p-4 hover:bg-dark-600/30 transition-all duration-300 cursor-pointer">
+                    <h4 className="font-semibold text-white mb-2">{topic}</h4>
+                    <p className="text-dark-400 text-sm mb-3">Master the fundamentals and advance your skills</p>
+                    <button
+                      onClick={() => {
+                        setSelectedTopic(topic);
+                        addNewTopic();
+                      }}
+                      className="w-full px-4 py-2 bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 rounded-lg text-sm font-medium transition-all duration-300"
+                    >
                       Start Learning
                     </button>
                   </div>
-                ))}
+                ))
+              }
+            </div>
+            
+            {availableTopics.filter(topic => 
+              (!userProfile.progress || !userProfile.progress[topic]) &&
+              topic.toLowerCase().includes(searchQuery.toLowerCase())
+            ).length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-dark-300">No courses found matching "{searchQuery}"</p>
               </div>
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="glass-morphism rounded-xl p-6 text-center">
-              <div className="text-3xl mb-2">📚</div>
-              <div className="text-2xl font-bold text-primary-400">12</div>
-              <div className="text-dark-300">Courses Completed</div>
-            </div>
-            <div className="glass-morphism rounded-xl p-6 text-center">
-              <div className="text-3xl mb-2">⏱️</div>
-              <div className="text-2xl font-bold text-primary-400">42h</div>
-              <div className="text-dark-300">Time Spent Learning</div>
-            </div>
-            <div className="glass-morphism rounded-xl p-6 text-center">
-              <div className="text-3xl mb-2">🏆</div>
-              <div className="text-2xl font-bold text-primary-400">8</div>
-              <div className="text-dark-300">Achievements Earned</div>
-            </div>
-            <div className="glass-morphism rounded-xl p-6 text-center">
-              <div className="text-3xl mb-2">📈</div>
-              <div className="text-2xl font-bold text-primary-400">5</div>
-              <div className="text-dark-300">Day Streak</div>
-            </div>
+            )}
           </div>
         </div>
       </main>

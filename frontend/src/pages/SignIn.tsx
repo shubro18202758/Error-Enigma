@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
+  const { signIn, signInWithGoogle } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     rememberMe: false
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -18,22 +22,39 @@ const SignIn: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (formData.email && formData.password) {
-      // Simulate sign in
-      alert('Sign in successful! Redirecting to dashboard...');
+    if (!formData.email || !formData.password) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    try {
+      setError('');
+      setLoading(true);
+      await signIn(formData.email, formData.password);
       navigate('/dashboard');
-    } else {
-      alert('Please fill in all fields');
+    } catch (error: any) {
+      setError('Failed to sign in. Please check your credentials.');
+      console.error('Sign in error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // Simulate Google sign in
-    alert('Google sign in successful! Redirecting to dashboard...');
-    navigate('/dashboard');
+  const handleGoogleSignIn = async () => {
+    try {
+      setError('');
+      setLoading(true);
+      await signInWithGoogle();
+      navigate('/dashboard');
+    } catch (error: any) {
+      setError('Failed to sign in with Google. Please try again.');
+      console.error('Google sign in error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -163,12 +184,20 @@ const SignIn: React.FC = () => {
                   </a>
                 </div>
 
+                {/* Error Message */}
+                {error && (
+                  <div className="bg-red-500/20 border border-red-500/50 rounded-xl p-3 text-red-300 text-sm">
+                    {error}
+                  </div>
+                )}
+
                 {/* Sign In Button */}
                 <button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg"
                 >
-                  Sign In
+                  {loading ? 'Signing In...' : 'Sign In'}
                 </button>
 
                 {/* Divider */}
@@ -185,7 +214,8 @@ const SignIn: React.FC = () => {
                 <button 
                   type="button" 
                   onClick={handleGoogleSignIn}
-                  className="w-full flex items-center justify-center px-4 py-3 border border-dark-600 rounded-xl text-white hover:bg-dark-700/50 transition-all duration-300 hover-lift"
+                  disabled={loading}
+                  className="w-full flex items-center justify-center px-4 py-3 border border-dark-600 rounded-xl text-white hover:bg-dark-700/50 disabled:bg-gray-600 disabled:cursor-not-allowed transition-all duration-300 hover-lift"
                 >
                   <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -193,7 +223,7 @@ const SignIn: React.FC = () => {
                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                   </svg>
-                  Continue with Google
+                  {loading ? 'Signing In...' : 'Continue with Google'}
                 </button>
 
                 {/* Sign Up Link */}

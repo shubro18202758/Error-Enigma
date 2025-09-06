@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const { signUp, signInWithGoogle } = useAuth();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -16,6 +18,8 @@ const SignUp: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -27,46 +31,58 @@ const SignUp: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      setError('Passwords do not match!');
       return;
     }
     
     // Validate password strength (basic)
     if (formData.password.length < 8) {
-      alert('Password must be at least 8 characters long!');
+      setError('Password must be at least 8 characters long!');
       return;
     }
     
     // Check if terms are accepted
     if (!formData.terms) {
-      alert('Please accept the terms and conditions!');
+      setError('Please accept the terms and conditions!');
+      return;
+    }
+
+    // Validate required fields
+    if (!formData.fullName || !formData.email || !formData.password) {
+      setError('Please fill in all required fields!');
       return;
     }
     
-    // Simulate account creation
-    const userData = {
-      fullName: formData.fullName,
-      email: formData.email,
-      dateOfBirth: formData.dateOfBirth,
-      clanId: formData.clanId,
-      educationLevel: formData.educationLevel,
-      areaOfInterest: formData.areaOfInterest
-    };
-    
-    console.log('User Data:', userData);
-    alert('Account created successfully! Redirecting to dashboard...');
-    navigate('/dashboard');
+    try {
+      setError('');
+      setLoading(true);
+      await signUp(formData.email, formData.password, formData.fullName);
+      navigate('/dashboard');
+    } catch (error: any) {
+      setError('Failed to create account. Please try again.');
+      console.error('Sign up error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogleSignUp = () => {
-    // Simulate Google sign up
-    alert('Google sign up successful! Redirecting to dashboard...');
-    navigate('/dashboard');
+  const handleGoogleSignUp = async () => {
+    try {
+      setError('');
+      setLoading(true);
+      await signInWithGoogle();
+      navigate('/dashboard');
+    } catch (error: any) {
+      setError('Failed to sign up with Google. Please try again.');
+      console.error('Google sign up error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
