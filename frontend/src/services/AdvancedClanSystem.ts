@@ -106,45 +106,19 @@ class AdvancedClanSystem {
           completedCourses: [],
           achievements: ['First Login']
         },
-        // Simulate other active members
+        // Minimal demo member
         {
           id: 'member_2',
-          name: 'Alex Chen',
-          avatar: '👨‍💻',
-          level: 3,
-          points: 2450,
-          currentCourse: 'Complete Data Science Masterclass',
-          currentProgress: 65,
-          lastActivity: new Date(Date.now() - 5 * 60000), // 5 minutes ago
-          isOnline: true,
-          completedCourses: ['JavaScript Fundamentals', 'Python Basics'],
-          achievements: ['Fast Learner', 'Quiz Master', 'Helpful Member']
-        },
-        {
-          id: 'member_3',
-          name: 'Sarah Ahmed',
-          avatar: '👩‍🎓',
-          level: 4,
-          points: 3200,
-          currentCourse: 'Advanced Machine Learning',
-          currentProgress: 40,
-          lastActivity: new Date(Date.now() - 15 * 60000), // 15 minutes ago
-          isOnline: true,
-          completedCourses: ['Data Analysis', 'Statistics', 'Python for ML'],
-          achievements: ['Course Crusher', 'Top Performer', 'Challenge Champion']
-        },
-        {
-          id: 'member_4',
-          name: 'Marcus Johnson',
-          avatar: '🧠',
+          name: 'Study Buddy',
+          avatar: '🤖',
           level: 2,
-          points: 1800,
-          currentCourse: 'Web Development Bootcamp',
-          currentProgress: 25,
-          lastActivity: new Date(Date.now() - 2 * 60000), // 2 minutes ago
-          isOnline: true,
-          completedCourses: ['HTML/CSS Basics'],
-          achievements: ['Quick Start', 'Consistent Learner']
+          points: 850,
+          currentCourse: 'Learning with AI',
+          currentProgress: 30,
+          lastActivity: new Date(Date.now() - 10 * 60000), // 10 minutes ago
+          isOnline: Math.random() > 0.3, // Sometimes online
+          completedCourses: ['Getting Started'],
+          achievements: ['Welcome']
         }
       ],
       totalPoints: 7450,

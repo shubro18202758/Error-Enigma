@@ -173,16 +173,16 @@ Generate detailed:
 5. Estimated completion timeline`;
 
       // Call AI service to generate roadmap
-      const roadmapResponse = await apiRequest('/api/ai/generate-roadmap', {
+      const roadmap = await apiRequest('/api/ai/generate-roadmap', {
         method: 'POST',
         body: JSON.stringify({
-          prompt: roadmapPrompt,
-          assessmentData,
-          userId: currentUser?.uid || 'anonymous'
+          assessmentResults: assessmentData,
+          userProfile: {
+            level: 'beginner',
+            userId: currentUser?.uid || 'anonymous'
+          }
         })
       });
-
-      const roadmap = await roadmapResponse.json();
       
       // Update message with generated roadmap
       setMessages(prev => prev.map(msg => 
@@ -190,7 +190,16 @@ Generate detailed:
           ...msg,
           content: `🎯 **Your Personalized Learning Roadmap**
 
-${roadmap.content || 'Roadmap generated successfully! Here\'s your customized learning path...'}`,
+${roadmap.roadmap?.studyPlan || 'Your personalized learning path has been generated based on your assessment results!'}
+
+**Focus Areas:**
+${roadmap.roadmap?.focusAreas?.map((area: string) => `• ${area}`).join('\n') || 'Continue with your current learning goals'}
+
+**Strengths Identified:**
+${roadmap.roadmap?.strengths?.map((strength: string) => `✅ ${strength}`).join('\n') || 'Keep building on your foundation'}
+
+**Next Steps:**
+${roadmap.roadmap?.nextSteps?.map((step: string, index: number) => `${index + 1}. ${step}`).join('\n') || 'Follow your personalized learning sequence'}`,
           isLoading: false,
           metadata: {
             roadmap: assessmentData,
@@ -301,9 +310,9 @@ ${roadmap.content || 'Roadmap generated successfully! Here\'s your customized le
         aiResponse = await apiRequest('/api/ai/roadmap', {
           method: 'POST',
           body: JSON.stringify({ 
-            query: messageText,
-            context: screenContext,
-            userGoals: intentAnalysis.extractedGoals
+            goals: intentAnalysis.extractedGoals || messageText,
+            timeline: '4-6 weeks',
+            preferences: { interests: [messageText] }
           })
         });
       } else if (intentAnalysis.intent === 'adaptive_test' || intentAnalysis.intent === 'assessment') {
@@ -317,21 +326,24 @@ ${roadmap.content || 'Roadmap generated successfully! Here\'s your customized le
         });
       } else if (intentAnalysis.intent === 'course_recommendation') {
         // Get course recommendations
-        aiResponse = await apiRequest('/api/ai/recommendations', {
+        aiResponse = await apiRequest('/api/ai/recommend', {
           method: 'POST',
           body: JSON.stringify({ 
-            query: messageText,
-            context: screenContext
+            topic: messageText,
+            difficulty: 'intermediate',
+            format: 'course'
           })
         });
       } else {
         // General AI chat with content library access
-        aiResponse = await apiRequest('/api/ai/chat', {
+        aiResponse = await apiRequest('/api/ai/agentic-chat', {
           method: 'POST',
           body: JSON.stringify({ 
             message: messageText,
-            context: screenContext,
-            conversationHistory: messages.slice(-10) // Last 10 messages for context
+            context: {
+              currentPage: screenContext.currentPage || 'chat',
+              conversationHistory: messages.slice(-5)
+            }
           })
         });
       }

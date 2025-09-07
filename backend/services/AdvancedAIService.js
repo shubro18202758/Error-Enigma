@@ -8,12 +8,43 @@ const path = require('path');
  */
 class AdvancedAIService {
   constructor() {
-    this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+    // Check for Gemini API key
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('❌ GEMINI_API_KEY not found in environment variables');
+      this.geminiAvailable = false;
+    } else {
+      console.log('🔑 Gemini API key found, length:', process.env.GEMINI_API_KEY.length);
+      this.geminiAvailable = true;
+    }
+    
+    this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'dummy');
+    // Updated to use the current Gemini model
+    this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     this.contentIndex = new Map();
     this.courseDatabase = new Map();
     this.vectorStore = new Map(); // Simplified vector store
     this.initializeRAG();
+    
+    // Test Gemini connection
+    this.testGeminiConnection();
+  }
+
+  async testGeminiConnection() {
+    if (!this.geminiAvailable) {
+      console.log('⚠️ Skipping Gemini connection test - API key not available');
+      return;
+    }
+    
+    try {
+      console.log('🔍 Testing Gemini API connection...');
+      const result = await this.model.generateContent('Hello');
+      const response = await result.response;
+      const text = response.text();
+      console.log('✅ Gemini API connection successful, response length:', text.length);
+    } catch (error) {
+      console.error('❌ Gemini API connection failed:', error.message);
+      this.geminiAvailable = false;
+    }
   }
 
   async initializeRAG() {
@@ -146,9 +177,21 @@ class AdvancedAIService {
   // Semantic search through content
   searchContent(query, limit = 5) {
     const results = [];
+    
+    // Handle undefined or null query
+    if (!query || typeof query !== 'string') {
+      console.log('Invalid query provided to searchContent:', query);
+      return [];
+    }
+    
     const queryLower = query.toLowerCase();
     
     for (const [key, content] of this.contentIndex) {
+      // Ensure content and title exist before calling toLowerCase()
+      if (!content || !content.content || !content.title) {
+        continue;
+      }
+      
       const contentLower = content.content.toLowerCase();
       const titleLower = content.title.toLowerCase();
       
@@ -186,16 +229,39 @@ class AdvancedAIService {
 
   async generateContextualResponse(userQuery, userContext = {}) {
     try {
+      // Validate query
+      if (!userQuery || typeof userQuery !== 'string' || !userQuery.trim()) {
+        console.log('Invalid userQuery provided to generateContextualResponse:', userQuery);
+        return {
+          response: "I need a specific question or topic to help you with. What would you like to learn about?",
+          relevantContent: [],
+          sources: []
+        };
+      }
+      
       // Search for relevant content
-      const relevantContent = this.searchContent(userQuery, 3);
+      const relevantContent = this.searchContent(userQuery.trim(), 3);
       
       // Build context-aware prompt
       const contextPrompt = this.buildContextPrompt(userQuery, relevantContent, userContext);
       
-      // Generate response with Gemini
-      const result = await this.model.generateContent(contextPrompt);
-      const response = await result.response;
-      const responseText = response.text();
+      // Generate response with Gemini or fallback
+      let responseText;
+      
+      if (this.geminiAvailable) {
+        try {
+          const result = await this.model.generateContent(contextPrompt);
+          const response = await result.response;
+          responseText = response.text();
+          console.log('✅ Gemini response generated successfully');
+        } catch (geminiError) {
+          console.error('❌ Gemini API error:', geminiError.message);
+          this.geminiAvailable = false; // Disable for this session
+          responseText = this.generateFallbackResponse(userQuery, relevantContent, userContext);
+        }
+      } else {
+        responseText = this.generateFallbackResponse(userQuery, relevantContent, userContext);
+      }
       
       return {
         response: responseText,
@@ -207,11 +273,59 @@ class AdvancedAIService {
         }))
       };
     } catch (error) {
-      console.error('AI Response Error:', error);
+      console.error('🚨 AI Response Error:', error);
+      
+      // Generate fallback response with content library
+      const relevantContent = this.searchContent(userQuery.trim(), 3);
       return {
-        response: "I apologize, but I'm having trouble processing your request right now. Please try again.",
-        error: error.message
+        response: this.generateFallbackResponse(userQuery, relevantContent, userContext),
+        relevantContent: relevantContent,
+        sources: relevantContent.map(content => ({
+          title: content.title,
+          type: content.type,
+          courseId: content.metadata?.courseId || 'unknown'
+        })),
+        error: 'AI service temporarily unavailable, using content library'
       };
+    }
+  }
+
+  generateFallbackResponse(userQuery, relevantContent, userContext) {
+    console.log('🔄 Generating fallback response using content library');
+    
+    if (relevantContent && relevantContent.length > 0) {
+      const topContent = relevantContent[0];
+      return `Based on our content library, I found information about "${topContent.title}":
+
+${topContent.content.substring(0, 300)}...
+
+**Related Topics:**
+${relevantContent.slice(0, 3).map(content => `• ${content.title}`).join('\n')}
+
+**What would you like to know more about?**
+- Course details and structure
+- Learning objectives and outcomes  
+- Prerequisites and requirements
+- Practice exercises and projects
+
+I can help you explore any of these topics in detail!`;
+    } else {
+      // No relevant content found, provide general help
+      const userLevel = userContext.level || 1;
+      const courses = Array.from(this.courseDatabase.values()).slice(0, 3);
+      
+      return `I'm here to help with your learning journey! (Level ${userLevel})
+
+**Available Courses:**
+${courses.map(course => `• ${course.title} - ${course.duration}`).join('\n')}
+
+**I can help you with:**
+- Finding relevant courses and tutorials
+- Explaining programming concepts
+- Creating personalized learning paths
+- Answering questions about course content
+
+What specific topic would you like to explore?`;
     }
   }
 
@@ -232,7 +346,7 @@ Relevant Content from Library:
       prompt += `
 ${index + 1}. ${content.title} (${content.type})
    Course: ${content.metadata.courseName || content.metadata.courseId}
-   Content: ${content.content.substring(0, 300)}...
+   Content: ${content.content ? content.content.substring(0, 300) : 'No content available'}...
    `;
     });
 
@@ -256,20 +370,77 @@ Please provide your response:`;
   getAllCourses() {
     const courses = [];
     for (const [key, courseData] of this.courseDatabase) {
+      // Calculate total duration in minutes for microlearning format
+      const totalMinutes = courseData.modules ? 
+        courseData.modules.reduce((total, module) => total + (module.total_duration_minutes || 0), 0) :
+        (courseData.estimated_hours * 60);
+      
       courses.push({
         id: key,
         title: courseData.course_name,
         description: courseData.description,
         difficulty: courseData.difficulty,
-        duration: `${courseData.estimated_hours} hours`,
+        duration: `${totalMinutes} minutes`, // Microlearning format
+        durationHours: Math.round(totalMinutes / 60 * 10) / 10, // For compatibility
         topic: courseData.topic,
         category: courseData.category,
         technologies: courseData.technologies || [],
         modules: courseData.total_modules,
-        learningObjectives: courseData.learning_objectives || []
+        totalLessons: courseData.modules ? 
+          courseData.modules.reduce((total, module) => total + (module.total_lessons || 0), 0) : 0,
+        learningObjectives: courseData.learning_objectives || [],
+        instructor: courseData.instructor,
+        courseId: courseData.course_id
       });
     }
     return courses;
+  }
+
+  // Get detailed lesson content including transcripts
+  async getLessonContent(courseId, moduleId, lessonId) {
+    try {
+      const coursePath = path.join(__dirname, '../../services/shared/content_library/Courses', courseId);
+      const course = this.courseDatabase.get(courseId);
+      
+      if (!course) return null;
+      
+      // Find the specific lesson
+      let targetLesson = null;
+      let targetModule = null;
+      
+      for (const module of course.modules) {
+        for (const lesson of module.lessons) {
+          if (lesson.lesson_id === lessonId) {
+            targetLesson = lesson;
+            targetModule = module;
+            break;
+          }
+        }
+        if (targetLesson) break;
+      }
+      
+      if (!targetLesson) return null;
+      
+      // Load transcript
+      const transcriptPath = path.join(coursePath, `Module_${String(targetModule.order).padStart(2, '0')}_${targetModule.module_name.toLowerCase().replace(/\s+/g, '_')}`, targetLesson.transcript_file);
+      
+      let transcript = '';
+      try {
+        transcript = await fs.readFile(transcriptPath, 'utf8');
+      } catch (error) {
+        console.log('Could not load transcript:', transcriptPath);
+      }
+      
+      return {
+        lesson: targetLesson,
+        module: targetModule,
+        transcript: transcript,
+        course: course
+      };
+    } catch (error) {
+      console.error('Error loading lesson content:', error);
+      return null;
+    }
   }
 
   // Generate personalized learning roadmap

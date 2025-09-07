@@ -61,6 +61,8 @@ class DatabaseService {
   executeStatementsSequentially(statements, index) {
     if (index >= statements.length) {
       console.log('✅ Database schema initialized');
+      // Initialize clans tables
+      this.initializeClansTable();
       return;
     }
 
@@ -365,6 +367,16 @@ class DatabaseService {
           console.log('Database connection closed');
         }
       });
+    }
+  }
+
+  // Initialize clans tables
+  initializeClansTable() {
+    try {
+      const Clans = require('../models/ClansSimple');
+      Clans.initializeTable();
+    } catch (error) {
+      console.error('❌ Error initializing clans:', error);
     }
   }
 }

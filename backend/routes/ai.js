@@ -173,8 +173,15 @@ router.post('/recommend', authenticateToken, async (req, res) => {
   try {
     const { topic, difficulty, format } = req.body;
     
+    // Build query from provided fields only
+    const queryParts = [];
+    if (topic && topic.trim()) queryParts.push(topic.trim());
+    if (difficulty && difficulty.trim()) queryParts.push(difficulty.trim());
+    if (format && format.trim()) queryParts.push(format.trim());
+    
+    const query = queryParts.length > 0 ? queryParts.join(' ') : 'programming courses';
+    
     const ai = await initializeAIService();
-    const query = `${topic} ${difficulty} ${format}`.trim();
     const recommendations = ai.searchContent(query, 6);
     
     res.json({
@@ -279,7 +286,24 @@ router.post('/agentic-chat', authenticateToken, async (req, res) => {
       currentPage: context?.currentPage || 'dashboard'
     };
     
-    const response = await ai.generateContextualResponse(message, userContext);
+    let response;
+    try {
+      response = await ai.generateContextualResponse(message, userContext);
+    } catch (error) {
+      console.error('AI response generation failed, using fallback:', error);
+      // Fallback response
+      response = {
+        response: `I understand you're asking about "${message}". I'm here to help with your learning journey! 
+
+Based on your current progress (Level ${userContext.level}, ${userContext.streak} day streak), I can assist you with:
+• Finding relevant courses and tutorials
+• Creating personalized learning paths
+• Taking skill assessments
+• Tracking your progress
+
+What specific topic would you like to explore or learn more about?`
+      };
+    }
     
     const suggestions = [
       'Show me learning paths',
@@ -314,6 +338,85 @@ router.post('/agentic-chat', authenticateToken, async (req, res) => {
     res.status(500).json({ 
       success: false, 
       error: 'AI temporarily unavailable'
+    });
+  }
+});
+
+// Generate personalized roadmap from assessment results
+router.post('/generate-roadmap', authenticateToken, async (req, res) => {
+  try {
+    const { assessmentResults, userProfile } = req.body;
+    
+    if (!assessmentResults) {
+      return res.status(400).json({
+        success: false,
+        error: 'Assessment results are required'
+      });
+    }
+    
+    const ai = await initializeAIService();
+    
+    // Process assessment results for roadmap generation
+    const roadmapData = {
+      userLevel: userProfile?.level || 'beginner',
+      strengths: assessmentResults.recommendations?.strengths || [],
+      focusAreas: assessmentResults.recommendations?.focusAreas || [],
+      completionPercentage: assessmentResults.learningPath?.completionPercentage || 0,
+      moduleTitle: assessmentResults.moduleInfo?.moduleTitle || 'Programming Course'
+    };
+    
+    // Generate AI-powered roadmap
+      // Generate AI-powered roadmap with fallback
+      let roadmap;
+      try {
+        roadmap = await ai.generateLearningRoadmap(roadmapData, {
+          timeline: '4-6 weeks',
+          focus: 'skill_building'
+        });
+      } catch (error) {
+        console.error('AI roadmap generation failed, using fallback:', error);
+        // Fallback roadmap structure
+        roadmap = {
+          roadmap: `Based on your assessment results, here's your personalized learning path:
+
+**Priority Focus Areas:**
+${roadmapData.focusAreas.slice(0, 3).map(area => `• ${area}`).join('\n')}
+
+**Your Strengths:**
+${roadmapData.strengths.slice(0, 3).map(strength => `✅ ${strength}`).join('\n')}
+
+**Recommended Study Approach:**
+1. Start with priority topics that need attention
+2. Build on your existing strengths  
+3. Practice consistently with coding exercises
+4. Take regular progress assessments`,
+          courses: [],
+          timeline: '4-6 weeks'
+        };
+      }    res.json({
+      success: true,
+      roadmap: {
+        studyPlan: roadmap.roadmap || 'Personalized study plan based on your assessment results',
+        recommendations: roadmap.courses?.slice(0, 5) || [],
+        timeline: roadmap.timeline || '4-6 weeks',
+        focusAreas: roadmapData.focusAreas,
+        strengths: roadmapData.strengths,
+        nextSteps: [
+          'Start with priority topics identified in your assessment',
+          'Practice coding exercises daily',
+          'Review concepts you found challenging',
+          'Take regular progress assessments'
+        ]
+      },
+      assessmentSummary: assessmentResults,
+      userProfile: roadmapData
+    });
+    
+  } catch (error) {
+    console.error('Roadmap generation error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error generating personalized roadmap'
     });
   }
 });

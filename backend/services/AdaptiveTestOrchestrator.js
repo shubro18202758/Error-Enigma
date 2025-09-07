@@ -5,7 +5,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 class AdaptiveTestOrchestrator {
   constructor() {
     this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    this.model = this.genAI.getGenerativeModel({ model: 'gemini-pro' });
+    this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     this.contentLibraryPath = path.join(__dirname, '../content-library');
     this.testResults = new Map(); // Store test results in memory (should be in DB in production)
   }
@@ -54,13 +54,37 @@ Return as JSON object with "questions" array.
 
       try {
         // Try to extract JSON from the response
-        const jsonMatch = response.text().match(/```json\n?([\s\S]*?)\n?```/) || 
-                         response.text().match(/```\n?([\s\S]*?)\n?```/) ||
-                         [null, response.text()];
+        let jsonText = response.text();
+        console.log('🔍 Raw AI Response Length:', jsonText.length);
         
-        adaptiveTest = JSON.parse(jsonMatch[1] || response.text());
+        // Try to extract from code blocks first
+        const jsonMatch = jsonText.match(/```json\n?([\s\S]*?)\n?```/) || 
+                         jsonText.match(/```\n?([\s\S]*?)\n?```/);
+        
+        if (jsonMatch && jsonMatch[1]) {
+          jsonText = jsonMatch[1].trim();
+          console.log('📋 Extracted JSON from code block');
+        }
+        
+        // Clean up common JSON issues more thoroughly
+        jsonText = jsonText
+          .replace(/,(\s*[}\]])/g, '$1')  // Remove trailing commas
+          .replace(/'/g, '"')           // Replace single quotes with double quotes
+          .replace(/\n/g, ' ')          // Replace newlines
+          .replace(/\s+/g, ' ')         // Replace multiple spaces
+          .replace(/([{,]\s*)"?(\w+)"?\s*:/g, '$1"$2":')  // Fix unquoted keys
+          .replace(/:\s*'([^']*)'/g, ': "$1"')  // Fix single quoted values
+          .replace(/,\s*}/g, '}')       // Remove trailing commas before closing brace
+          .replace(/,\s*]/g, ']')       // Remove trailing commas before closing bracket
+          .trim();
+        
+        // Try parsing
+        adaptiveTest = JSON.parse(jsonText);
+        console.log('✅ Successfully parsed adaptive test JSON');
       } catch (parseError) {
-        console.error('Failed to parse adaptive test JSON:', parseError);
+        console.error('❌ Failed to parse adaptive test JSON:', parseError);
+        console.log('📄 Problematic JSON text (first 500 chars):', jsonText?.substring(0, 500));
+        console.log('🔧 Using fallback test structure');
         // Fallback test structure
         adaptiveTest = this.generateFallbackTest(userGoals);
       }

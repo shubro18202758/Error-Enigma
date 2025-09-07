@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: edtech-backend-python
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    rootDir: ./services
+    envVars:
+      - key: PYTHON_ENV
+        value: production
+      - key: PORT
+        value: 10001

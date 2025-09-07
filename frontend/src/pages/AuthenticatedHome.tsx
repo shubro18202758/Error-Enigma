@@ -585,18 +585,20 @@ const Home = () => {
       <SmartAdaptiveTest
         isOpen={showAdaptiveTest}
         onClose={() => setShowAdaptiveTest(false)}
-        onComplete={(results: any) => {
-          // Transform results to match expected analysis format
+        onComplete={(roadmapData: any) => {
+          // Transform roadmap data to match expected analysis format
           const analysis = {
-            overallScore: Math.round(results.reduce((acc: number, r: any) => acc + (r.is_correct ? 100 : 0), 0) / results.length),
+            overallScore: roadmapData.learningPath?.completionPercentage || 0,
             skillAssessment: {
-              recommendedLevel: 'intermediate',
-              strengths: results.filter((r: any) => r.is_correct).map((r: any) => r.lesson_name).slice(0, 3),
-              weaknesses: results.filter((r: any) => !r.is_correct).map((r: any) => r.lesson_name).slice(0, 3),
-              totalQuestions: results.length,
-              correctAnswers: results.filter((r: any) => r.is_correct).length
+              recommendedLevel: roadmapData.learningPath?.completionPercentage > 70 ? 'advanced' : 
+                              roadmapData.learningPath?.completionPercentage > 40 ? 'intermediate' : 'beginner',
+              strengths: roadmapData.recommendations?.strengths?.slice(0, 3) || [],
+              weaknesses: roadmapData.recommendations?.focusAreas?.slice(0, 3) || [],
+              totalQuestions: roadmapData.learningPath?.totalTopics || 0,
+              correctAnswers: roadmapData.learningPath?.masteredTopics?.length || 0
             },
-            detailedResults: results
+            detailedResults: roadmapData.assessmentResults || [],
+            roadmapData: roadmapData
           };
           
           setTestAnalysis(analysis);

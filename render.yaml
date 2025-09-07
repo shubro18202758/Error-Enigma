@@ -1,0 +1,32 @@
+services:
+  # Node.js Backend API
+  - type: web
+    name: edtech-nodejs-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+
+  # Python AI Services
+  - type: web
+    name: edtech-python-backend  
+    env: python
+    plan: free
+    buildCommand: cd services && pip install -r requirements.txt
+    startCommand: cd services && python main.py
+    envVars:
+      - key: PYTHON_ENV
+        value: production
+      - key: PORT
+        value: 10001
+
+  # PostgreSQL Database
+  - type: pserv
+    name: edtech-database
+    plan: free
+    ipAllowList: []

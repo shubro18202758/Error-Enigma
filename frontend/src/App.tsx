@@ -7,7 +7,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Clans from './pages/Clans';
-import AdvancedClansPage from './pages/AdvancedClansPage';
+import RealClansPage from './pages/RealClansPage';
 import './App.css';
 
 function AppContent() {
@@ -21,7 +21,7 @@ function AppContent() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/clans" element={<AdvancedClansPage />} />
+          <Route path="/clans" element={<RealClansPage />} />
         </Routes>
       </div>
     </Router>
