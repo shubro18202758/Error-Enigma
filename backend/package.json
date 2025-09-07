@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'No build step required'",
     "dev": "nodemon server.js",
-    "build": "npm install",
     "test": "jest",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all",

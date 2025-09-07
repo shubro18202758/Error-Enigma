@@ -618,7 +618,7 @@ const QuestionComponent: React.FC<{
             {question.difficulty}
           </span>
         </div>
-        <h3 className="text-xl font-semibold text-white">{question.question}</h3>
+        <h3 className="text-xl font-semibold text-gray-900">{question.question}</h3>
       </div>
 
       {/* Answer Options */}
@@ -649,7 +649,7 @@ const QuestionComponent: React.FC<{
                     <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
                   )}
                 </div>
-                <span className="text-white">{option}</span>
+                <span className="text-gray-900">{option}</span>
               </div>
             </label>
           ))
@@ -658,7 +658,7 @@ const QuestionComponent: React.FC<{
             value={selectedAnswer}
             onChange={(e) => handleAnswerSelect(e.target.value)}
             placeholder="Type your answer here..."
-            className="w-full p-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+            className="w-full p-4 bg-white/90 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
             rows={4}
           />
         )}

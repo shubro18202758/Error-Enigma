@@ -169,7 +169,7 @@ router.get('/analytics', authenticateToken, async (req, res) => {
 });
 
 // Smart content recommendation
-router.post('/recommend', authenticateToken, async (req, res) => {
+router.post('/recommend', optionalAuth, async (req, res) => {
   try {
     const { topic, difficulty, format } = req.body;
     
@@ -181,18 +181,32 @@ router.post('/recommend', authenticateToken, async (req, res) => {
     
     const query = queryParts.length > 0 ? queryParts.join(' ') : 'programming courses';
     
+    console.log('🔍 Recommendation request:', { query, topic, difficulty, format });
+    
     const ai = await initializeAIService();
-    const recommendations = ai.searchContent(query, 6);
+    
+    // Check if AI service is properly initialized
+    if (!ai) {
+      throw new Error('AI service not initialized');
+    }
+    
+    const recommendations = await ai.searchContent(query, 6);
+    
+    console.log('✅ Recommendations found:', recommendations?.length || 0);
     
     res.json({
       success: true,
-      recommendations: recommendations,
+      recommendations: recommendations || [],
       searchQuery: query,
-      totalFound: recommendations.length
+      totalFound: recommendations?.length || 0
     });
   } catch (error) {
-    console.error('Recommendation error:', error);
-    res.status(500).json({ success: false, error: error.message });
+    console.error('❌ Recommendation error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 

@@ -761,7 +761,7 @@ Make it comprehensive and actionable for an EdTech platform experience.`;
               </div>
               
               <div className="bg-gray-50 border rounded-lg p-6 mb-6">
-                <h4 className="text-lg font-medium mb-4">{currentQuestion.question}</h4>
+                <h4 className="text-lg font-medium mb-4 text-gray-900">{currentQuestion.question}</h4>
                 
                 <div className="space-y-3">
                   {Object.entries(currentQuestion.options).map(([letter, option]) => (
@@ -778,8 +778,8 @@ Make it comprehensive and actionable for an EdTech platform experience.`;
                         className="mr-3"
                         disabled={isLoading}
                       />
-                      <span className="font-medium mr-2">{letter})</span>
-                      <span>{option}</span>
+                      <span className="font-medium mr-2 text-gray-900">{letter})</span>
+                      <span className="text-gray-900">{option}</span>
                     </label>
                   ))}
                 </div>

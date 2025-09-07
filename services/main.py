@@ -209,10 +209,14 @@ async def general_exception_handler(request, exc):
     }
 
 if __name__ == "__main__":
+    # Production hosting configuration
+    port = int(os.getenv("PORT", settings.API_PORT))
+    host = os.getenv("HOST", "0.0.0.0")  # Render requires 0.0.0.0
+    
     uvicorn.run(
         "main:app",
-        host=settings.API_HOST,
-        port=settings.API_PORT,
+        host=host,
+        port=port,
         reload=settings.DEBUG,
         log_level="info"
     )
