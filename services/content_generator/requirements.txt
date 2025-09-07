@@ -1,0 +1,18 @@
+# Content Generator Requirements
+# For creating structured educational content with audio
+
+# Core dependencies
+pathlib>=1.0.1
+
+# Text-to-Speech options (install one or more)
+# Option 1: Google Text-to-Speech (recommended)
+gtts>=2.3.2
+
+# Option 2: Pydub for audio processing
+pydub>=0.25.1
+
+# Option 3: Windows SAPI (built-in on Windows)
+# pywin32>=306  # Uncomment if using Windows TTS
+
+# Optional: For enhanced content generation
+requests>=2.31.0

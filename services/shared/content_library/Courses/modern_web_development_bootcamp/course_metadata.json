@@ -1,0 +1,134 @@
+{
+  "course_id": "course_59162680",
+  "course_name": "Modern Web Development Bootcamp",
+  "topic": "Web Development",
+  "description": "Full-stack web development with modern technologies and best practices",
+  "difficulty": "beginner",
+  "estimated_hours": 60,
+  "instructor": "Prof. Alex Rodriguez",
+  "category": "Technology & Programming",
+  "created_at": "2025-09-06T14:50:05.625360",
+  "total_modules": 3,
+  "modules": [
+    {
+      "module_id": "mod_0bd0167b",
+      "module_name": "Frontend Fundamentals",
+      "description": "HTML, CSS, and JavaScript basics",
+      "order": 1,
+      "total_lessons": 3,
+      "lessons": [
+        {
+          "lesson_id": "lesson_324f06b0",
+          "title": "HTML Structure and Semantics",
+          "description": "Building semantic web pages",
+          "order": 1,
+          "duration_minutes": 15,
+          "video_file": "Lesson_01_html_structure_and_semantics/lesson_video.mp4",
+          "transcript_file": "Lesson_01_html_structure_and_semantics/lesson_transcript.txt",
+          "metadata_file": "Lesson_01_html_structure_and_semantics/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_6ed94127",
+          "title": "CSS Styling and Layouts",
+          "description": "Modern CSS techniques",
+          "order": 2,
+          "duration_minutes": 20,
+          "video_file": "Lesson_02_css_styling_and_layouts/lesson_video.mp4",
+          "transcript_file": "Lesson_02_css_styling_and_layouts/lesson_transcript.txt",
+          "metadata_file": "Lesson_02_css_styling_and_layouts/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_607c7512",
+          "title": "JavaScript ES6+ Features",
+          "description": "Modern JavaScript programming",
+          "order": 3,
+          "duration_minutes": 25,
+          "video_file": "Lesson_03_javascript_es6+_features/lesson_video.mp4",
+          "transcript_file": "Lesson_03_javascript_es6+_features/lesson_transcript.txt",
+          "metadata_file": "Lesson_03_javascript_es6+_features/lesson_metadata.json"
+        }
+      ],
+      "total_duration_minutes": 60
+    },
+    {
+      "module_id": "mod_66aa34e6",
+      "module_name": "React Development",
+      "description": "Building interactive user interfaces with React",
+      "order": 2,
+      "total_lessons": 3,
+      "lessons": [
+        {
+          "lesson_id": "lesson_16a2f1f1",
+          "title": "React Components and JSX",
+          "description": "Component-based architecture",
+          "order": 1,
+          "duration_minutes": 22,
+          "video_file": "Lesson_01_react_components_and_jsx/lesson_video.mp4",
+          "transcript_file": "Lesson_01_react_components_and_jsx/lesson_transcript.txt",
+          "metadata_file": "Lesson_01_react_components_and_jsx/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_12234dd7",
+          "title": "State Management and Hooks",
+          "description": "Managing component state",
+          "order": 2,
+          "duration_minutes": 28,
+          "video_file": "Lesson_02_state_management_and_hooks/lesson_video.mp4",
+          "transcript_file": "Lesson_02_state_management_and_hooks/lesson_transcript.txt",
+          "metadata_file": "Lesson_02_state_management_and_hooks/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_c649b315",
+          "title": "React Router and Navigation",
+          "description": "Building single-page applications",
+          "order": 3,
+          "duration_minutes": 25,
+          "video_file": "Lesson_03_react_router_and_navigation/lesson_video.mp4",
+          "transcript_file": "Lesson_03_react_router_and_navigation/lesson_transcript.txt",
+          "metadata_file": "Lesson_03_react_router_and_navigation/lesson_metadata.json"
+        }
+      ],
+      "total_duration_minutes": 75
+    },
+    {
+      "module_id": "mod_b7c158ed",
+      "module_name": "Backend Development",
+      "description": "Server-side programming with Node.js",
+      "order": 3,
+      "total_lessons": 3,
+      "lessons": [
+        {
+          "lesson_id": "lesson_dba8f608",
+          "title": "Node.js and Express Setup",
+          "description": "Building REST APIs",
+          "order": 1,
+          "duration_minutes": 20,
+          "video_file": "Lesson_01_node.js_and_express_setup/lesson_video.mp4",
+          "transcript_file": "Lesson_01_node.js_and_express_setup/lesson_transcript.txt",
+          "metadata_file": "Lesson_01_node.js_and_express_setup/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_714ad80d",
+          "title": "Database Integration",
+          "description": "Working with MongoDB",
+          "order": 2,
+          "duration_minutes": 30,
+          "video_file": "Lesson_02_database_integration/lesson_video.mp4",
+          "transcript_file": "Lesson_02_database_integration/lesson_transcript.txt",
+          "metadata_file": "Lesson_02_database_integration/lesson_metadata.json"
+        },
+        {
+          "lesson_id": "lesson_4341ac5e",
+          "title": "Authentication and Security",
+          "description": "User authentication systems",
+          "order": 3,
+          "duration_minutes": 35,
+          "video_file": "Lesson_03_authentication_and_security/lesson_video.mp4",
+          "transcript_file": "Lesson_03_authentication_and_security/lesson_transcript.txt",
+          "metadata_file": "Lesson_03_authentication_and_security/lesson_metadata.json"
+        }
+      ],
+      "total_duration_minutes": 85
+    }
+  ]
+}

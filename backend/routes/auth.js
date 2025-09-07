@@ -2,7 +2,7 @@ const express = require('express');
 const { auth, db } = require('../config/firebaseAdmin');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { authenticateUser } = require('../middleware/auth');
+const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -231,7 +231,7 @@ router.post('/google', async (req, res) => {
 });
 
 // Logout
-router.post('/logout', authenticateUser, async (req, res) => {
+router.post('/logout', authenticateToken, async (req, res) => {
   try {
     // Firebase handles client-side logout
     // We can log this event or perform cleanup if needed
@@ -254,7 +254,7 @@ router.post('/logout', authenticateUser, async (req, res) => {
 });
 
 // Verify token
-router.get('/verify', authenticateUser, async (req, res) => {
+router.get('/verify', authenticateToken, async (req, res) => {
   try {
     // Get latest user data
     const userDoc = await db.collection('users').doc(req.user.uid).get();

@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_69b9914a",
+    "title": "Descriptive Statistics",
+    "description": "Measures of central tendency and spread",
+    "order": 1,
+    "duration_minutes": 18,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 812,
+    "estimated_speech_duration": 406.0,
+    "actual_duration_minutes": 18,
+    "difficulty_level": "Intermediate",
+    "key_topics": [
+      "median",
+      "these",
+      "descriptive",
+      "which",
+      "would",
+      "standard",
+      "understanding",
+      "measures",
+      "making",
+      "value"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Descriptive Statistics",
+      "Apply Descriptive Statistics techniques in practical, real-world scenarios",
+      "Analyze the relationship between Descriptive Statistics and other topics in Statistical Analysis and Visualization",
+      "Evaluate the effectiveness of different approaches to Descriptive Statistics",
+      "Create solutions using Descriptive Statistics methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 36,
+    "generated_at": "2025-09-06T14:40:59.644388"
+  }
+}

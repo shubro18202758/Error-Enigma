@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_6ce39a25",
+    "title": "Python Basics for Data Science",
+    "description": "Variables, data types, and basic operations",
+    "order": 1,
+    "duration_minutes": 20,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 577,
+    "estimated_speech_duration": 288.5,
+    "actual_duration_minutes": 20,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "python",
+      "science",
+      "lists",
+      "might",
+      "programming",
+      "python's",
+      "loops",
+      "these",
+      "going",
+      "essential"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Python Basics for Data Science",
+      "Apply Python Basics for Data Science techniques in practical, real-world scenarios",
+      "Analyze the relationship between Python Basics for Data Science and other topics in Python Programming Fundamentals",
+      "Evaluate the effectiveness of different approaches to Python Basics for Data Science",
+      "Create solutions using Python Basics for Data Science methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 40,
+    "generated_at": "2025-09-06T14:40:37.787524"
+  }
+}

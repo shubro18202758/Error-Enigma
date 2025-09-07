@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_3ef2aec6",
+    "title": "Data Visualization with Matplotlib",
+    "description": "Creating effective charts and graphs",
+    "order": 2,
+    "duration_minutes": 22,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 744,
+    "estimated_speech_duration": 372.0,
+    "actual_duration_minutes": 22,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "visualization",
+      "concepts",
+      "we'll",
+      "practical",
+      "matplotlib",
+      "statistical",
+      "analysis",
+      "today's",
+      "learning"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Data Visualization with Matplotlib",
+      "Apply Data Visualization with Matplotlib techniques in practical, real-world scenarios",
+      "Analyze the relationship between Data Visualization with Matplotlib and other topics in Statistical Analysis and Visualization",
+      "Evaluate the effectiveness of different approaches to Data Visualization with Matplotlib",
+      "Create solutions using Data Visualization with Matplotlib methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 44,
+    "generated_at": "2025-09-06T14:41:05.848440"
+  }
+}

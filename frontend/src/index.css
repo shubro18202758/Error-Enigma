@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Professional Theme */
+@import url('./styles/professional-theme.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* Custom CSS Variables for colors that might not be in Tailwind */
 :root {
   --primary-400: #60A5FA;

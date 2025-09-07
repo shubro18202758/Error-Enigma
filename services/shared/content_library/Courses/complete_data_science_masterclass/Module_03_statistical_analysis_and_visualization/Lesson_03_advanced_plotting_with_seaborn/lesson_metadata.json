@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_1979b1ed",
+    "title": "Advanced Plotting with Seaborn",
+    "description": "Statistical visualizations and styling",
+    "order": 3,
+    "duration_minutes": 20,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 743,
+    "estimated_speech_duration": 371.5,
+    "actual_duration_minutes": 20,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "advanced",
+      "plotting",
+      "concepts",
+      "we'll",
+      "practical",
+      "statistical",
+      "seaborn",
+      "analysis",
+      "today's"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Advanced Plotting with Seaborn",
+      "Apply Advanced Plotting with Seaborn techniques in practical, real-world scenarios",
+      "Analyze the relationship between Advanced Plotting with Seaborn and other topics in Statistical Analysis and Visualization",
+      "Evaluate the effectiveness of different approaches to Advanced Plotting with Seaborn",
+      "Create solutions using Advanced Plotting with Seaborn methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 40,
+    "generated_at": "2025-09-06T14:41:12.815695"
+  }
+}

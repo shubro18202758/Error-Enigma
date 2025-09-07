@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_ebca7c40",
+    "title": "Tools and Environment Setup",
+    "description": "Essential tools and software installation",
+    "order": 3,
+    "duration_minutes": 18,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 744,
+    "estimated_speech_duration": 372.0,
+    "actual_duration_minutes": 18,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "tools",
+      "environment",
+      "concepts",
+      "we'll",
+      "practical",
+      "setup",
+      "introduction",
+      "today's",
+      "learning"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Tools and Environment Setup",
+      "Apply Tools and Environment Setup techniques in practical, real-world scenarios",
+      "Analyze the relationship between Tools and Environment Setup and other topics in Introduction to Data Science",
+      "Evaluate the effectiveness of different approaches to Tools and Environment Setup",
+      "Create solutions using Tools and Environment Setup methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 36,
+    "generated_at": "2025-09-06T14:40:32.945801"
+  }
+}

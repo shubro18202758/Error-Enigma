@@ -1,0 +1,31 @@
+{
+  "chat_overlay": {
+    "enabled": true,
+    "ai_endpoint": "http://localhost:8000/api/v1/ai/chat",
+    "websocket": "ws://localhost:3001/socket.io"
+  },
+  "content_processing": {
+    "auto_process": true,
+    "output_format": "microlearning_chunks",
+    "ai_analysis": true
+  },
+  "gemini_integration": {
+    "primary_llm": "gemini-pro",
+    "fallback_llm": "gpt-3.5-turbo",
+    "features": [
+      "chat",
+      "content_generation",
+      "assessment",
+      "analytics"
+    ]
+  },
+  "features": {
+    "adaptive_assessment": true,
+    "personalized_learning": true,
+    "real_time_analytics": true,
+    "gamification": true,
+    "social_learning": true,
+    "spaced_repetition": true,
+    "engagement_monitoring": true
+  }
+}

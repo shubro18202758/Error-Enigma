@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_c3698650",
+    "module_name": "Machine Learning Applications",
+    "description": "Introduction to machine learning algorithms and applications",
+    "order": 4,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_2b49a628",
+        "title": "Supervised Learning Overview",
+        "description": "Classification and regression techniques",
+        "order": 1,
+        "duration_minutes": 25,
+        "video_file": "Lesson_01_supervised_learning_overview/lesson_video.mp4",
+        "transcript_file": "Lesson_01_supervised_learning_overview/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_supervised_learning_overview/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_1920e33f",
+        "title": "Unsupervised Learning Methods",
+        "description": "Clustering and dimensionality reduction",
+        "order": 2,
+        "duration_minutes": 22,
+        "video_file": "Lesson_02_unsupervised_learning_methods/lesson_video.mp4",
+        "transcript_file": "Lesson_02_unsupervised_learning_methods/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_unsupervised_learning_methods/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_71c352c4",
+        "title": "Model Evaluation and Validation",
+        "description": "Assessing model performance and avoiding overfitting",
+        "order": 3,
+        "duration_minutes": 28,
+        "video_file": "Lesson_03_model_evaluation_and_validation/lesson_video.mp4",
+        "transcript_file": "Lesson_03_model_evaluation_and_validation/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_model_evaluation_and_validation/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 75
+  },
+  "generated_at": "2025-09-06T14:41:33.677333",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

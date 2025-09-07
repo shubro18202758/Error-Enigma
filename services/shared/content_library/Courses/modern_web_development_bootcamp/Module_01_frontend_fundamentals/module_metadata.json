@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_0bd0167b",
+    "module_name": "Frontend Fundamentals",
+    "description": "HTML, CSS, and JavaScript basics",
+    "order": 1,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_324f06b0",
+        "title": "HTML Structure and Semantics",
+        "description": "Building semantic web pages",
+        "order": 1,
+        "duration_minutes": 15,
+        "video_file": "Lesson_01_html_structure_and_semantics/lesson_video.mp4",
+        "transcript_file": "Lesson_01_html_structure_and_semantics/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_html_structure_and_semantics/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_6ed94127",
+        "title": "CSS Styling and Layouts",
+        "description": "Modern CSS techniques",
+        "order": 2,
+        "duration_minutes": 20,
+        "video_file": "Lesson_02_css_styling_and_layouts/lesson_video.mp4",
+        "transcript_file": "Lesson_02_css_styling_and_layouts/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_css_styling_and_layouts/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_607c7512",
+        "title": "JavaScript ES6+ Features",
+        "description": "Modern JavaScript programming",
+        "order": 3,
+        "duration_minutes": 25,
+        "video_file": "Lesson_03_javascript_es6+_features/lesson_video.mp4",
+        "transcript_file": "Lesson_03_javascript_es6+_features/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_javascript_es6+_features/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 60
+  },
+  "generated_at": "2025-09-06T14:50:22.442951",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

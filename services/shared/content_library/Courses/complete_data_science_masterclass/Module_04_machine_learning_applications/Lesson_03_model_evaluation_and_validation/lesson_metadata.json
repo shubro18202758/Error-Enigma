@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_71c352c4",
+    "title": "Model Evaluation and Validation",
+    "description": "Assessing model performance and avoiding overfitting",
+    "order": 3,
+    "duration_minutes": 28,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 740,
+    "estimated_speech_duration": 370.0,
+    "actual_duration_minutes": 28,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "model",
+      "learning",
+      "evaluation",
+      "concepts",
+      "we'll",
+      "practical",
+      "validation",
+      "machine",
+      "today's"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Model Evaluation and Validation",
+      "Apply Model Evaluation and Validation techniques in practical, real-world scenarios",
+      "Analyze the relationship between Model Evaluation and Validation and other topics in Machine Learning Applications",
+      "Evaluate the effectiveness of different approaches to Model Evaluation and Validation",
+      "Create solutions using Model Evaluation and Validation methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 56,
+    "generated_at": "2025-09-06T14:41:33.676686"
+  }
+}

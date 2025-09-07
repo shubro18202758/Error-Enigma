@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_12234dd7",
+    "title": "State Management and Hooks",
+    "description": "Managing component state",
+    "order": 2,
+    "duration_minutes": 28,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 732,
+    "estimated_speech_duration": 366.0,
+    "actual_duration_minutes": 28,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "state",
+      "management",
+      "concepts",
+      "we'll",
+      "practical",
+      "hooks",
+      "react",
+      "today's",
+      "development."
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of State Management and Hooks",
+      "Apply State Management and Hooks techniques in practical, real-world scenarios",
+      "Analyze the relationship between State Management and Hooks and other topics in React Development",
+      "Evaluate the effectiveness of different approaches to State Management and Hooks",
+      "Create solutions using State Management and Hooks methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 56,
+    "generated_at": "2025-09-06T14:50:33.211768"
+  }
+}

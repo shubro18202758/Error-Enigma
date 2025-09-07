@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_66aa34e6",
+    "module_name": "React Development",
+    "description": "Building interactive user interfaces with React",
+    "order": 2,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_16a2f1f1",
+        "title": "React Components and JSX",
+        "description": "Component-based architecture",
+        "order": 1,
+        "duration_minutes": 22,
+        "video_file": "Lesson_01_react_components_and_jsx/lesson_video.mp4",
+        "transcript_file": "Lesson_01_react_components_and_jsx/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_react_components_and_jsx/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_12234dd7",
+        "title": "State Management and Hooks",
+        "description": "Managing component state",
+        "order": 2,
+        "duration_minutes": 28,
+        "video_file": "Lesson_02_state_management_and_hooks/lesson_video.mp4",
+        "transcript_file": "Lesson_02_state_management_and_hooks/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_state_management_and_hooks/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_c649b315",
+        "title": "React Router and Navigation",
+        "description": "Building single-page applications",
+        "order": 3,
+        "duration_minutes": 25,
+        "video_file": "Lesson_03_react_router_and_navigation/lesson_video.mp4",
+        "transcript_file": "Lesson_03_react_router_and_navigation/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_react_router_and_navigation/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 75
+  },
+  "generated_at": "2025-09-06T14:50:38.662229",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

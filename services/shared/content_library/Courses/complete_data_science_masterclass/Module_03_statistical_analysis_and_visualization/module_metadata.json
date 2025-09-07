@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_2d6c2b37",
+    "module_name": "Statistical Analysis and Visualization",
+    "description": "Statistical methods and data visualization techniques",
+    "order": 3,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_69b9914a",
+        "title": "Descriptive Statistics",
+        "description": "Measures of central tendency and spread",
+        "order": 1,
+        "duration_minutes": 18,
+        "video_file": "Lesson_01_descriptive_statistics/lesson_video.mp4",
+        "transcript_file": "Lesson_01_descriptive_statistics/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_descriptive_statistics/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_3ef2aec6",
+        "title": "Data Visualization with Matplotlib",
+        "description": "Creating effective charts and graphs",
+        "order": 2,
+        "duration_minutes": 22,
+        "video_file": "Lesson_02_data_visualization_with_matplotlib/lesson_video.mp4",
+        "transcript_file": "Lesson_02_data_visualization_with_matplotlib/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_data_visualization_with_matplotlib/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_1979b1ed",
+        "title": "Advanced Plotting with Seaborn",
+        "description": "Statistical visualizations and styling",
+        "order": 3,
+        "duration_minutes": 20,
+        "video_file": "Lesson_03_advanced_plotting_with_seaborn/lesson_video.mp4",
+        "transcript_file": "Lesson_03_advanced_plotting_with_seaborn/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_advanced_plotting_with_seaborn/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 60
+  },
+  "generated_at": "2025-09-06T14:41:12.817940",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

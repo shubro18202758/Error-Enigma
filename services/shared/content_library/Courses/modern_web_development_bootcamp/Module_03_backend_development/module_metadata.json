@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_b7c158ed",
+    "module_name": "Backend Development",
+    "description": "Server-side programming with Node.js",
+    "order": 3,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_dba8f608",
+        "title": "Node.js and Express Setup",
+        "description": "Building REST APIs",
+        "order": 1,
+        "duration_minutes": 20,
+        "video_file": "Lesson_01_node.js_and_express_setup/lesson_video.mp4",
+        "transcript_file": "Lesson_01_node.js_and_express_setup/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_node.js_and_express_setup/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_714ad80d",
+        "title": "Database Integration",
+        "description": "Working with MongoDB",
+        "order": 2,
+        "duration_minutes": 30,
+        "video_file": "Lesson_02_database_integration/lesson_video.mp4",
+        "transcript_file": "Lesson_02_database_integration/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_database_integration/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_4341ac5e",
+        "title": "Authentication and Security",
+        "description": "User authentication systems",
+        "order": 3,
+        "duration_minutes": 35,
+        "video_file": "Lesson_03_authentication_and_security/lesson_video.mp4",
+        "transcript_file": "Lesson_03_authentication_and_security/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_authentication_and_security/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 85
+  },
+  "generated_at": "2025-09-06T14:50:54.946081",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

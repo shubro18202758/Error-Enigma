@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const { signUp, signInWithGoogle } = useAuth();
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const SignUp: React.FC = () => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
     
-    setFormData(prev => ({
+    setFormData((prev: typeof formData) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
@@ -90,8 +90,8 @@ const SignUp: React.FC = () => {
       {/* Enhanced header with navigation */}
       <header className="fixed w-full top-0 z-50 bg-dark-800/80 backdrop-blur-md border-b border-dark-600">
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex items-center space-x-3 flex-shrink-0">
               <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -102,11 +102,14 @@ const SignUp: React.FC = () => {
               </Link>
             </div>
 
+            {/* Spacer */}
+            <div className="flex-1"></div>
+
             {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-6 flex-shrink-0">
               <Link to="/" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Home</Link>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Courses</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">About</a>
+              <button className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Courses</button>
+              <button className="text-gray-300 hover:text-white transition-all duration-300 font-medium">About</button>
             </nav>
 
             <div className="flex items-center space-x-4">
@@ -137,6 +140,11 @@ const SignUp: React.FC = () => {
             </div>
 
             <div className="glass-morphism rounded-2xl p-8 hover-lift">
+              {error && (
+                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Full Name */}
@@ -330,17 +338,17 @@ const SignUp: React.FC = () => {
                     className="w-4 h-4 mt-1 text-primary-600 bg-dark-800 border-dark-600 rounded focus:ring-primary-500 focus:ring-2"
                   />
                   <label htmlFor="terms" className="text-sm text-dark-300">
-                    I agree to the <a href="#" className="text-primary-400 hover:text-primary-300 transition-colors">Terms of Service</a> 
-                    and <a href="#" className="text-primary-400 hover:text-primary-300 transition-colors">Privacy Policy</a>
+                    I agree to the <Link to="/terms" className="text-primary-400 hover:text-primary-300">Terms of Service</Link> and <Link to="/privacy" className="text-primary-400 hover:text-primary-300">Privacy Policy</Link>
                   </label>
                 </div>
 
                 {/* Sign Up Button */}
                 <button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Create Account
+                  {loading ? 'Creating Account...' : 'Create Account'}
                 </button>
 
                 {/* Divider */}
@@ -348,8 +356,8 @@ const SignUp: React.FC = () => {
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-dark-600"></div>
                   </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-dark-800 text-dark-300">Or sign up with</span>
+                  <div className="relative text-center">
+                    <span className="px-4 bg-dark-900 text-dark-400">Or</span>
                   </div>
                 </div>
 
@@ -357,7 +365,8 @@ const SignUp: React.FC = () => {
                 <button 
                   type="button" 
                   onClick={handleGoogleSignUp}
-                  className="w-full flex items-center justify-center px-4 py-3 border border-dark-600 rounded-xl text-white hover:bg-dark-700/50 transition-all duration-300 hover-lift"
+                  disabled={loading}
+                  className="w-full flex items-center justify-center px-4 py-3 border border-dark-600 rounded-xl text-white hover:bg-dark-700/50 transition-all duration-300 hover-lift disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_714ad80d",
+    "title": "Database Integration",
+    "description": "Working with MongoDB",
+    "order": 2,
+    "duration_minutes": 30,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 716,
+    "estimated_speech_duration": 358.0,
+    "actual_duration_minutes": 30,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "database",
+      "concepts",
+      "we'll",
+      "practical",
+      "integration",
+      "backend",
+      "today's",
+      "development.",
+      "learning"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Database Integration",
+      "Apply Database Integration techniques in practical, real-world scenarios",
+      "Analyze the relationship between Database Integration and other topics in Backend Development",
+      "Evaluate the effectiveness of different approaches to Database Integration",
+      "Create solutions using Database Integration methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 60,
+    "generated_at": "2025-09-06T14:50:49.511166"
+  }
+}

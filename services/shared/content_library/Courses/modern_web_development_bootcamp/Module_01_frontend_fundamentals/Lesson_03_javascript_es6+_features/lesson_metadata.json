@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_607c7512",
+    "title": "JavaScript ES6+ Features",
+    "description": "Modern JavaScript programming",
+    "order": 3,
+    "duration_minutes": 25,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 724,
+    "estimated_speech_duration": 362.0,
+    "actual_duration_minutes": 25,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "javascript",
+      "concepts",
+      "we'll",
+      "practical",
+      "features",
+      "frontend",
+      "today's",
+      "learning",
+      "we've"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of JavaScript ES6+ Features",
+      "Apply JavaScript ES6+ Features techniques in practical, real-world scenarios",
+      "Analyze the relationship between JavaScript ES6+ Features and other topics in Frontend Fundamentals",
+      "Evaluate the effectiveness of different approaches to JavaScript ES6+ Features",
+      "Create solutions using JavaScript ES6+ Features methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 50,
+    "generated_at": "2025-09-06T14:50:22.442385"
+  }
+}

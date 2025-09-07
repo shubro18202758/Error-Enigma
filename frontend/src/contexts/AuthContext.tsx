@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { 
   User,
   signInWithEmailAndPassword,
@@ -13,6 +13,7 @@ import { auth, googleProvider } from '../config/firebase';
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  getIdToken: () => Promise<string | null>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<any>;
   signInWithGoogle: () => Promise<any>;
@@ -49,12 +50,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
+    localStorage.removeItem('authToken');
     return signOut(auth);
   };
 
+  const getIdToken = async (): Promise<string | null> => {
+    if (!currentUser) return null;
+    
+    try {
+      const token = await currentUser.getIdToken();
+      localStorage.setItem('authToken', token);
+      return token;
+    } catch (error) {
+      console.error('Error getting ID token:', error);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
+      
+      if (user) {
+        // Store token when user signs in
+        try {
+          const token = await user.getIdToken();
+          localStorage.setItem('authToken', token);
+        } catch (error) {
+          console.error('Error storing token:', error);
+        }
+      } else {
+        // Clear token when user signs out
+        localStorage.removeItem('authToken');
+      }
+      
       setLoading(false);
     });
 
@@ -67,7 +96,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signUp,
     signIn,
     signInWithGoogle,
-    logout
+    logout,
+    getIdToken
   };
 
   return (

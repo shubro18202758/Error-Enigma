@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_4341ac5e",
+    "title": "Authentication and Security",
+    "description": "User authentication systems",
+    "order": 3,
+    "duration_minutes": 35,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 724,
+    "estimated_speech_duration": 362.0,
+    "actual_duration_minutes": 35,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "authentication",
+      "concepts",
+      "we'll",
+      "practical",
+      "security",
+      "backend",
+      "today's",
+      "development.",
+      "learning"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Authentication and Security",
+      "Apply Authentication and Security techniques in practical, real-world scenarios",
+      "Analyze the relationship between Authentication and Security and other topics in Backend Development",
+      "Evaluate the effectiveness of different approaches to Authentication and Security",
+      "Create solutions using Authentication and Security methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 70,
+    "generated_at": "2025-09-06T14:50:54.945541"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_c649b315",
+    "title": "React Router and Navigation",
+    "description": "Building single-page applications",
+    "order": 3,
+    "duration_minutes": 25,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 732,
+    "estimated_speech_duration": 366.0,
+    "actual_duration_minutes": 25,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "react",
+      "these",
+      "router",
+      "concepts",
+      "we'll",
+      "practical",
+      "navigation",
+      "today's",
+      "development.",
+      "learning"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of React Router and Navigation",
+      "Apply React Router and Navigation techniques in practical, real-world scenarios",
+      "Analyze the relationship between React Router and Navigation and other topics in React Development",
+      "Evaluate the effectiveness of different approaches to React Router and Navigation",
+      "Create solutions using React Router and Navigation methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 50,
+    "generated_at": "2025-09-06T14:50:38.661687"
+  }
+}

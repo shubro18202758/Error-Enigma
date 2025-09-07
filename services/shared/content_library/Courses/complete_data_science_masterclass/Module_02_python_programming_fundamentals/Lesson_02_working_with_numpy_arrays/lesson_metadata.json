@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_dc486630",
+    "title": "Working with NumPy Arrays",
+    "description": "Numerical computing with NumPy library",
+    "order": 2,
+    "duration_minutes": 25,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 739,
+    "estimated_speech_duration": 369.5,
+    "actual_duration_minutes": 25,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "working",
+      "numpy",
+      "concepts",
+      "we'll",
+      "practical",
+      "arrays",
+      "python",
+      "programming",
+      "today's"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Working with NumPy Arrays",
+      "Apply Working with NumPy Arrays techniques in practical, real-world scenarios",
+      "Analyze the relationship between Working with NumPy Arrays and other topics in Python Programming Fundamentals",
+      "Evaluate the effectiveness of different approaches to Working with NumPy Arrays",
+      "Create solutions using Working with NumPy Arrays methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 50,
+    "generated_at": "2025-09-06T14:40:45.640840"
+  }
+}

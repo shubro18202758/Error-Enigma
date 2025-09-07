@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_6ed94127",
+    "title": "CSS Styling and Layouts",
+    "description": "Modern CSS techniques",
+    "order": 2,
+    "duration_minutes": 20,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 732,
+    "estimated_speech_duration": 366.0,
+    "actual_duration_minutes": 20,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "styling",
+      "concepts",
+      "we'll",
+      "practical",
+      "layouts",
+      "frontend",
+      "today's",
+      "learning",
+      "we've"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of CSS Styling and Layouts",
+      "Apply CSS Styling and Layouts techniques in practical, real-world scenarios",
+      "Analyze the relationship between CSS Styling and Layouts and other topics in Frontend Fundamentals",
+      "Evaluate the effectiveness of different approaches to CSS Styling and Layouts",
+      "Create solutions using CSS Styling and Layouts methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 40,
+    "generated_at": "2025-09-06T14:50:16.856751"
+  }
+}

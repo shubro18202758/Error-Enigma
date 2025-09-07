@@ -1,0 +1,22 @@
+# Enhanced Content Generator Requirements
+# For creating structured educational content with video/audio files
+
+# Core dependencies
+pathlib>=1.0.1
+
+# Text-to-Speech options (choose based on your system)
+# Option 1: Google Text-to-Speech (recommended for quality)
+gtts>=2.3.2
+
+# Option 2: Audio processing and manipulation
+pydub>=0.25.1
+
+# Option 3: Windows TTS (Windows only - usually pre-installed)
+pywin32>=306
+
+# Optional: For video processing
+# ffmpeg-python>=0.2.0
+
+# Optional: Enhanced content generation
+requests>=2.31.0
+collections-extended>=2.0.2

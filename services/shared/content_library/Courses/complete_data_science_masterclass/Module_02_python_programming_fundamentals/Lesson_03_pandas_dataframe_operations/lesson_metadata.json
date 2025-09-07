@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_4dbe3a0b",
+    "title": "Pandas DataFrame Operations",
+    "description": "Data manipulation with Pandas",
+    "order": 3,
+    "duration_minutes": 30,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 730,
+    "estimated_speech_duration": 365.0,
+    "actual_duration_minutes": 30,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "these",
+      "pandas",
+      "dataframe",
+      "concepts",
+      "we'll",
+      "practical",
+      "operations",
+      "python",
+      "programming",
+      "today's"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of Pandas DataFrame Operations",
+      "Apply Pandas DataFrame Operations techniques in practical, real-world scenarios",
+      "Analyze the relationship between Pandas DataFrame Operations and other topics in Python Programming Fundamentals",
+      "Evaluate the effectiveness of different approaches to Pandas DataFrame Operations",
+      "Create solutions using Pandas DataFrame Operations methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 60,
+    "generated_at": "2025-09-06T14:40:52.354704"
+  }
+}

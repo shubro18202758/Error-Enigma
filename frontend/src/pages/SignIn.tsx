@@ -62,8 +62,8 @@ const SignIn: React.FC = () => {
       {/* Enhanced header with navigation */}
       <header className="fixed w-full top-0 z-50 bg-dark-800/80 backdrop-blur-md border-b border-dark-600">
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex items-center space-x-3 flex-shrink-0">
               <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -74,11 +74,14 @@ const SignIn: React.FC = () => {
               </Link>
             </div>
 
+            {/* Spacer */}
+            <div className="flex-1"></div>
+
             {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-6 flex-shrink-0">
               <Link to="/" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Home</Link>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Courses</a>
-              <a href="#" className="text-gray-300 hover:text-white transition-all duration-300 font-medium">About</a>
+              <button className="text-gray-300 hover:text-white transition-all duration-300 font-medium">Courses</button>
+              <button className="text-gray-300 hover:text-white transition-all duration-300 font-medium">About</button>
             </nav>
 
             <div className="flex items-center space-x-4">
@@ -179,9 +182,9 @@ const SignIn: React.FC = () => {
                     />
                     <span className="ml-2 text-sm text-dark-300">Remember me</span>
                   </label>
-                  <a href="#" className="text-sm text-primary-400 hover:text-primary-300 transition-colors">
+                  <button className="text-sm text-primary-400 hover:text-primary-300 transition-colors">
                     Forgot password?
-                  </a>
+                  </button>
                 </div>
 
                 {/* Error Message */}

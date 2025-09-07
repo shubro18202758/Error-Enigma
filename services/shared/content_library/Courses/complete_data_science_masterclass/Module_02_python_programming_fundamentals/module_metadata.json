@@ -1,0 +1,61 @@
+{
+  "module_info": {
+    "module_id": "mod_ae7061b6",
+    "module_name": "Python Programming Fundamentals",
+    "description": "Essential Python skills for data analysis",
+    "order": 2,
+    "total_lessons": 3,
+    "lessons": [
+      {
+        "lesson_id": "lesson_6ce39a25",
+        "title": "Python Basics for Data Science",
+        "description": "Variables, data types, and basic operations",
+        "order": 1,
+        "duration_minutes": 20,
+        "video_file": "Lesson_01_python_basics_for_data_science/lesson_video.mp4",
+        "transcript_file": "Lesson_01_python_basics_for_data_science/lesson_transcript.txt",
+        "metadata_file": "Lesson_01_python_basics_for_data_science/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_dc486630",
+        "title": "Working with NumPy Arrays",
+        "description": "Numerical computing with NumPy library",
+        "order": 2,
+        "duration_minutes": 25,
+        "video_file": "Lesson_02_working_with_numpy_arrays/lesson_video.mp4",
+        "transcript_file": "Lesson_02_working_with_numpy_arrays/lesson_transcript.txt",
+        "metadata_file": "Lesson_02_working_with_numpy_arrays/lesson_metadata.json"
+      },
+      {
+        "lesson_id": "lesson_4dbe3a0b",
+        "title": "Pandas DataFrame Operations",
+        "description": "Data manipulation with Pandas",
+        "order": 3,
+        "duration_minutes": 30,
+        "video_file": "Lesson_03_pandas_dataframe_operations/lesson_video.mp4",
+        "transcript_file": "Lesson_03_pandas_dataframe_operations/lesson_transcript.txt",
+        "metadata_file": "Lesson_03_pandas_dataframe_operations/lesson_metadata.json"
+      }
+    ],
+    "total_duration_minutes": 75
+  },
+  "generated_at": "2025-09-06T14:40:52.358948",
+  "file_structure": {
+    "total_lessons": 3,
+    "media_files": [
+      "Lesson_01/lesson_video.mp4",
+      "Lesson_02/lesson_video.mp4",
+      "Lesson_03/lesson_video.mp4"
+    ],
+    "transcript_files": [
+      "Lesson_01/lesson_transcript.txt",
+      "Lesson_02/lesson_transcript.txt",
+      "Lesson_03/lesson_transcript.txt"
+    ],
+    "metadata_files": [
+      "Lesson_01/lesson_metadata.json",
+      "Lesson_02/lesson_metadata.json",
+      "Lesson_03/lesson_metadata.json"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "lesson_info": {
+    "lesson_id": "lesson_66ca7293",
+    "title": "What is Data Science",
+    "description": "Understanding the field and its applications",
+    "order": 1,
+    "duration_minutes": 12,
+    "video_file": "",
+    "transcript_file": "",
+    "metadata_file": ""
+  },
+  "content_details": {
+    "script_word_count": 457,
+    "estimated_speech_duration": 228.5,
+    "actual_duration_minutes": 12,
+    "difficulty_level": "Advanced",
+    "key_topics": [
+      "science",
+      "statistical",
+      "through",
+      "analysis,",
+      "insights",
+      "data.",
+      "these",
+      "where",
+      "techniques",
+      "guide"
+    ],
+    "learning_objectives": [
+      "Understand the fundamental concepts and principles of What is Data Science",
+      "Apply What is Data Science techniques in practical, real-world scenarios",
+      "Analyze the relationship between What is Data Science and other topics in Introduction to Data Science",
+      "Evaluate the effectiveness of different approaches to What is Data Science",
+      "Create solutions using What is Data Science methodologies and best practices"
+    ]
+  },
+  "files": {
+    "video_file": "lesson_video.mp4",
+    "transcript_file": "lesson_transcript.txt",
+    "metadata_file": "lesson_metadata.json"
+  },
+  "technical_details": {
+    "video_format": "MP4",
+    "audio_quality": "Standard TTS",
+    "file_size_estimate_mb": 24,
+    "generated_at": "2025-09-06T15:26:22.000186"
+  }
+}

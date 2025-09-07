@@ -8,8 +8,8 @@ const firebaseConfig = {
   authDomain: "error-404-6b343.firebaseapp.com",
   projectId: "error-404-6b343",
   storageBucket: "error-404-6b343.appspot.com",
-  messagingSenderId: "123456789", // Replace with your actual sender ID
-  appId: "1:123456789:web:abcdef123456" // Replace with your actual app ID
+  messagingSenderId: "1090942717056",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || "1:1090942717056:web:default"
 };
 
 // Initialize Firebase
